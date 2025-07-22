@@ -1905,6 +1905,7 @@ async def _get_vector_context(
                     "content": result["content"],
                     "created_at": result.get("created_at", None),
                     "file_path": result.get("file_path", "unknown_source"),
+                    "chunk_id": result.get("id", "unknown_chunk_id"),  # Add chunk_id from vector DB
                     "source_type": "vector",  # Mark the source type
                 }
                 valid_chunks.append(chunk_with_metadata)
@@ -2228,7 +2229,11 @@ async def _build_query_context(
         if all_chunks:
             # Create a temporary query_param copy with adjusted chunk token limit
             temp_chunks = [
-                {"content": chunk["content"], "file_path": chunk["file_path"]}
+                {
+                    "content": chunk["content"], 
+                    "file_path": chunk["file_path"],
+                    "chunk_id": chunk.get("chunk_id", "unknown_chunk_id")
+                }
                 for chunk in all_chunks
             ]
 
@@ -2249,6 +2254,7 @@ async def _build_query_context(
                         "id": i + 1,
                         "content": chunk["content"],
                         "file_path": chunk.get("file_path", "unknown_source"),
+                        "chunk_id": chunk.get("chunk_id", "unknown_chunk_id"),
                     }
                 )
 
@@ -2771,6 +2777,7 @@ async def _find_related_text_unit_from_relationships(
     for t in valid_text_units:
         chunk_data = t["data"].copy()
         chunk_data["source_type"] = "relationship"
+        chunk_data["chunk_id"] = t["id"]  # Add chunk_id from the chunk ID
         result_chunks.append(chunk_data)
 
     return result_chunks
@@ -2878,6 +2885,7 @@ async def naive_query(
                 "id": i + 1,
                 "content": chunk["content"],
                 "file_path": chunk.get("file_path", "unknown_source"),
+                "chunk_id": chunk.get("chunk_id", "unknown_chunk_id"),
             }
         )
 

@@ -70,3 +70,8 @@ test_*
 
 # Cline files
 memory-bank/
+
+# Data processing files
+*.csv
+*.xlsx
+*.ipynb

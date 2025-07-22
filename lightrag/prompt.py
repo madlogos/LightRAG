@@ -9,7 +9,11 @@ PROMPTS["DEFAULT_TUPLE_DELIMITER"] = "<|>"
 PROMPTS["DEFAULT_RECORD_DELIMITER"] = "##"
 PROMPTS["DEFAULT_COMPLETION_DELIMITER"] = "<|COMPLETE|>"
 
-PROMPTS["DEFAULT_ENTITY_TYPES"] = ["organization", "person", "geo", "event", "category"]
+# PROMPTS["DEFAULT_ENTITY_TYPES"] = ["organization", "person", "geo", "event", "category"]
+PROMPTS["DEFAULT_ENTITY_TYPES"] = ["body", "tissue", "cell", "molecule", "gene", 
+                                   "medication", "procedure", "device", "lab test", "imaging", "pathogen", 
+                                   "manifestation", "disease", "condition", "epidemiology", 
+                                   "department", "technology", "document"]
 
 PROMPTS["DEFAULT_USER_PROMPT"] = "n/a"
 
@@ -130,6 +134,88 @@ Output:
 ("relationship"{tuple_delimiter}"Noah Carter"{tuple_delimiter}"Carbon-Fiber Spikes"{tuple_delimiter}"Noah Carter used carbon-fiber spikes to enhance performance during the race."{tuple_delimiter}"athletic equipment, performance boost"{tuple_delimiter}7){record_delimiter}
 ("relationship"{tuple_delimiter}"World Athletics Federation"{tuple_delimiter}"100m Sprint Record"{tuple_delimiter}"The World Athletics Federation is responsible for validating and recognizing new sprint records."{tuple_delimiter}"sports regulation, record certification"{tuple_delimiter}9){record_delimiter}
 ("content_keywords"{tuple_delimiter}"athletics, sprinting, record-breaking, sports technology, competition"){completion_delimiter}
+#############################""",
+    """Example 4:
+    
+Entity_types: [organization, geo, disease, condition, demography]
+Text:
+Myopia is harmful to students’ eyesight and places a heavy economic burden on society as it has become a public health problem, and is one of the most common health problems among children and adolescents in China. 
+
+Approximately half of the global population is projected to suffer from myopia by 2050, and it is listed by the World Health Organization as one of the five eye diseases targeted for improvement. 
+
+Moreover, myopia greatly affects the lives of individuals who have it, and those with high myopia have a higher risk of eye diseases, including fundus lesions, macular degeneration, cataracts and irreversible visual impairment or blindness. 
+
+Myopia usually occurs during childhood and adolescence, with the number of young people developing it increasing, especially in China. Therefore, school-age children are a key group to target in the prevention and control of myopia.
+#############
+Output:
+("entity"{tuple_delimiter}"Myopia"{tuple_delimiter}"disease"{tuple_delimiter}"A common eye condition where distant objects appear blurry, often developing during childhood and adolescence. It is a significant public health issue, particularly in China, and can lead to severe complications like high myopia, fundus lesions, macular degeneration, cataracts, and blindness. It imposes a heavy economic burden on society."){record_delimiter}
+("entity"{tuple_delimiter}"World Health Organization (WHO)"{tuple_delimiter}"organization"{tuple_delimiter}"A global health agency that categorizes myopia as one of the five eye diseases targeted for improvement by 2050. It highlights the growing prevalence and public health implications of myopia worldwide."){record_delimiter}
+("entity"{tuple_delimiter}"China"{tuple_delimiter}"geo"{tuple_delimiter}"A country with a high prevalence of myopia among children and adolescents, making it a focal point for public health efforts to prevent and control the condition."){record_delimiter}
+("entity"{tuple_delimiter}"School-age children"{tuple_delimiter}"demography"{tuple_delimiter}"A key demographic targeted for myopia prevention and control due to the condition’s typical onset during childhood and adolescence."){record_delimiter}
+("entity"{tuple_delimiter}"High myopia"{tuple_delimiter}"condition"{tuple_delimiter}"A severe form of myopia associated with increased risks of eye diseases such as fundus lesions, macular degeneration, cataracts, and irreversible vision loss or blindness."){record_delimiter}
+("entity"{tuple_delimiter}"Fundus lesions"{tuple_delimiter}"disease"{tuple_delimiter}"A complication of high myopia involving damage to the retina, potentially leading to vision impairment."){record_delimiter}
+("entity"{tuple_delimiter}"Macular degeneration"{tuple_delimiter}"disease"{tuple_delimiter}"A condition affecting the central part of the retina, linked to high myopia and progressive vision loss."){record_delimiter}
+("entity"{tuple_delimiter}"Cataracts"{tuple_delimiter}"disease"{tuple_delimiter}"Clouding of the eye’s lens, more prevalent in individuals with high myopia."){record_delimiter}
+("entity"{tuple_delimiter}"Blindness"{tuple_delimiter}"condition"{tuple_delimiter}"A severe outcome of untreated high myopia or its complications, resulting in irreversible vision loss."){record_delimiter}
+("relationship"{tuple_delimiter}"Myopia"{tuple_delimiter}"School-age children"{tuple_delimiter}"Myopia commonly develops during childhood and adolescence, with school-age children being a primary focus for prevention efforts."{tuple_delimiter}"Prevalence; Prevention Target"{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}"Myopia"{tuple_delimiter}"World Health Organization (WHO)"{tuple_delimiter}"The WHO lists myopia as one of five priority eye diseases due to its growing global prevalence and public health impact."{tuple_delimiter}"Categorization; Global Health Priority"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"Myopia"{tuple_delimiter}"China"{tuple_delimiter}"China has a notably high prevalence of myopia among children and adolescents, driving national public health initiatives."{tuple_delimiter}"Epidemiology; Public Health Strategy"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"High myopia"{tuple_delimiter}"Fundus lesions"{tuple_delimiter}"High myopia increases the risk of fundus lesions due to structural changes in the retina."{tuple_delimiter}"Disease Complication; Risk Factor"{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}"High myopia"{tuple_delimiter}"Macular degeneration"{tuple_delimiter}"High myopia is associated with macular degeneration, leading to progressive central vision loss."{tuple_delimiter}"Disease Complication; Vision Loss"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"High myopia"{tuple_delimiter}"Cataracts"{tuple_delimiter}"Individuals with high myopia are at higher risk of developing cataracts."{tuple_delimiter}"Disease Complication; Risk Factor"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"High myopia"{tuple_delimiter}"Blindness"{tuple_delimiter}"Untreated high myopia can result in irreversible blindness due to severe eye damage."{tuple_delimiter}"Disease Progression; Severe Outcome"{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}"Myopia"{tuple_delimiter}"High myopia"{tuple_delimiter}"Untreated or progressive myopia can evolve into high myopia, which carries greater health risks."{tuple_delimiter}"Disease Progression; Severity"{tuple_delimiter}8){record_delimiter}
+("content_keywords"{tuple_delimiter}"Myopia, Public Health, Children and Adolescents, China, Economic Burden, Prevention and Control, Eye Diseases, World Health Organization"){completion_delimiter}
+#############################""",
+    """Example 5:
+    
+Entity_types: [organization, geo, condition, disease, medication, operation, body, tissue, cell, molecule, gene, demography, department, lab test, imaging, pathogen]
+Text:
+The principle of laser treatment of scar is to remove scar tissue or injure scar vessels, inhibit collagen synthesis and cell proliferation, and induce cell apoptosis by utilising the special functions of laser such as burning, gasification, cutting, coagulation, and defocusing. Different kinds of lasers have different wavelengths, different absorption groups, and different mechanisms. 
+
+The main absorption groups of pulsed dye laser (PDL), adjustable pulse width Nd:YAG doubling laser (VPW532 nm/532 nm KTP), and long pulse width Nd:YAG 1064 nm laser are oxyhaemoglobin, which specifically damages blood vessels in scars, promotes heat coagulation and necrosis of vascular endothelial cells, inhibits vascular proliferation, aggravates tissue hypoxia, leads to collagenase release, and promotes the number of fibroblasts. 
+
+When the amount of extracellular matrix (EXM) is decreased, the degradation of EXM is increased, thus inhibiting the growth of scar and promoting scar atrophy.
+
+Some scholars believe that 585/595 nm PDL can inhibit the expression of transforming growth factor‐beta (TGF‐β), upregulate the expression of matrix metalloproteinases (MMPs), and increase the apoptosis of fibroblasts, thus promoting scar shrinkage. 
+
+It can stimulate the proliferation of mast cells, promote the release of histamine, combine with its thermal effect, and cause the remodelling of collagen fibres. 
+
+The characteristic of 532 nm KTP is that the pulse width can be adjusted according to the thickness and depth of blood vessels. Some scholars have compared 532 nm KTP and 595 nm PDL in the treatment of erythematous scars within 24 months after operation. 
+
+Both are equally safe and effective in the treatment of scars. KTP is superior to PDL in improving the distribution and quantity of blood vessels in scars, but the average pain score of KTP is higher than that of PDL in the treatment, which may be due to oxidised haemoglobin. The protein absorbs KTP more strongly. 
+
+532 nm KTP has the advantages of less heat damage, fewer adverse reactions such as purpura after operation, and short recovery period, but it still has the risk of erythema and oedema formation. 
+
+In addition, it can competitively enhance the absorption of melanin and increase the potential risk of epidermal injury and pigmentation. 
+
+Long pulse width Nd:YAG 1064 nm laser cannot only selectively inhibit the formation of microvessels in scars and induce atrophy or closure, but also selectively inhibit the synthesis of collagen and the expression of type I procollagen gene without affecting cell activity and DNA replication, so as to treat scars.
+#############
+Output:
+("entity"{tuple_delimiter}"Pulsed Dye Laser (PDL)"{tuple_delimiter}"operation"{tuple_delimiter}"A laser used to treat scars by targeting blood vessels, inhibiting collagen synthesis, and promoting fibroblast apoptosis through specific wavelengths absorbed by oxyhaemoglobin."){record_delimiter}
+("entity"{tuple_delimiter}"Adjustable Pulse Width Nd:YAG Doubling Laser (VPW532 nm/532 nm KTP)"{tuple_delimiter}"operation"{tuple_delimiter}"A laser with adjustable pulse width for targeting blood vessels and melanin, causing thermal coagulation with reduced heat damage but higher pain scores."){record_delimiter}
+("entity"{tuple_delimiter}"Long Pulse Width Nd:YAG 1064 nm Laser"{tuple_delimiter}"operation"{tuple_delimiter}"A laser that inhibits microvessel formation and collagen synthesis without affecting cell activity or DNA replication."){record_delimiter}
+("entity"{tuple_delimiter}"Oxyhaemoglobin"{tuple_delimiter}"molecule"{tuple_delimiter}"A blood component absorbing specific laser wavelengths, leading to vascular endothelial cell damage and scar hypoxia."){record_delimiter}
+("entity"{tuple_delimiter}"Scar"{tuple_delimiter}"condition"{tuple_delimiter}"Abnormal tissue growth post-injury, targeted by lasers to reduce collagen and vascular proliferation."){record_delimiter}
+("entity"{tuple_delimiter}"Fibroblasts"{tuple_delimiter}"cell"{tuple_delimiter}"Cells producing collagen; their apoptosis is induced by lasers to inhibit scar growth."){record_delimiter}
+("entity"{tuple_delimiter}"Transforming Growth Factor‐beta (TGF‐β)"{tuple_delimiter}"molecule"{tuple_delimiter}"A gene whose expression is inhibited by PDL, reducing collagen synthesis."){record_delimiter}
+("entity"{tuple_delimiter}"Matrix Metalloproteinases (MMPs)"{tuple_delimiter}"molecule"{tuple_delimiter}"Enzymes upregulated by PDL to degrade extracellular matrix and reduce scarring."){record_delimiter}
+("entity"{tuple_delimiter}"Haemoglobin"{tuple_delimiter}"molecule"{tuple_delimiter}"A protein absorbing KTP laser energy, contributing to vascular damage and pain."){record_delimiter}
+("entity"{tuple_delimiter}"Melanin"{tuple_delimiter}"molecule"{tuple_delimiter}"A pigment absorbing KTP laser, increasing epidermal injury and pigmentation risks."){record_delimiter}
+("entity"{tuple_delimiter}"Type I Procollagen Gene"{tuple_delimiter}"gene"{tuple_delimiter}"A gene selectively inhibited by Nd:YAG 1064 nm laser to reduce collagen production."){record_delimiter}
+("entity"{tuple_delimiter}"Erythematous Scars"{tuple_delimiter}"condition"{tuple_delimiter}"Red scars treated by KTP and PDL lasers, improving vascular distribution."){record_delimiter}
+("entity"{tuple_delimiter}"Purpura"{tuple_delimiter}"condition"{tuple_delimiter}"A post-treatment adverse reaction reduced by KTP laser."){record_delimiter}
+("entity"{tuple_delimiter}"Microvessels"{tuple_delimiter}"body"{tuple_delimiter}"Small blood vessels targeted by Nd:YAG laser for closure and scar atrophy."){record_delimiter}
+("relationship"{tuple_delimiter}"Pulsed Dye Laser (PDL)"{tuple_delimiter}"Scar"{tuple_delimiter}"PDL inhibits collagen synthesis and vascular proliferation in scars via oxyhaemoglobin absorption."{tuple_delimiter}"scar treatment, collagen inhibition"{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}"Pulsed Dye Laser (PDL)"{tuple_delimiter}"Transforming Growth Factor‐beta (TGF‐β)"{tuple_delimiter}"PDL suppresses TGF‐β expression to reduce scar collagen production."{tuple_delimiter}"gene regulation"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"Pulsed Dye Laser (PDL)"{tuple_delimiter}"Matrix Metalloproteinases (MMPs)"{tuple_delimiter}"PDL upregulates MMPs to degrade extracellular matrix and shrink scars."{tuple_delimiter}"matrix degradation"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"Adjustable Pulse Width Nd:YAG Doubling Laser (VPW532 nm/532 nm KTP)"{tuple_delimiter}"Scar"{tuple_delimiter}"KTP improves vascular distribution in scars but increases pain due to haemoglobin absorption."{tuple_delimiter}vascular remodeling, pain risk"{tuple_delimiter}"8){record_delimiter}
+("relationship"{tuple_delimiter}"Adjustable Pulse Width Nd:YAG Doubling Laser (VPW532 nm/532 nm KTP)"{tuple_delimiter}"Haemoglobin"{tuple_delimiter}"KTP’s energy is absorbed by haemoglobin, causing vascular coagulation."{tuple_delimiter}"thermal damage"{tuple_delimiter}7){record_delimiter}
+("relationship"{tuple_delimiter}"Adjustable Pulse Width Nd:YAG Doubling Laser (VPW532 nm/532 nm KTP)"{tuple_delimiter}"Melanin"{tuple_delimiter}"KTP competitively targets melanin, increasing pigmentation risks."{tuple_delimiter}"pigmentation risk"{tuple_delimiter}6){record_delimiter}
+("relationship"{tuple_delimiter}"Long Pulse Width Nd:YAG 1064 nm Laser"{tuple_delimiter}"Microvessels"{tuple_delimiter}"Nd:YAG laser closes microvessels to induce scar atrophy."{tuple_delimiter}"vascular inhibition"{tuple_delimiter}9){record_delimiter}
+("relationship"{tuple_delimiter}"Long Pulse Width Nd:YAG 1064 nm Laser"{tuple_delimiter}"Type I Procollagen Gene"{tuple_delimiter}"Nd:YAG laser inhibits Type I procollagen gene to reduce collagen synthesis."{tuple_delimiter}"collagen suppression"{tuple_delimiter}8){record_delimiter}
+("relationship"{tuple_delimiter}"Long Pulse Width Nd:YAG 1064 nm Laser"{tuple_delimiter}"Scar"{tuple_delimiter}"Nd:YAG treats scars by dual inhibition of microvessels and collagen."{tuple_delimiter}"dual therapy"{tuple_delimiter}9){record_delimiter}
+("content_keywords"{tuple_delimiter}"Laser Treatment, Scar Reduction, Collagen Synthesis, Vascular Damage, Cell Apoptosis, Thermal Coagulation, Gene Regulation, Pigmentation Risks"){completion_delimiter}
 #############################""",
 ]
 
