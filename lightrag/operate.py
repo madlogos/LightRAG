@@ -2232,7 +2232,7 @@ async def _build_query_context(
                 {
                     "content": chunk["content"], 
                     "file_path": chunk["file_path"],
-                    "chunk_id": chunk.get("chunk_id", "unknown_chunk_id")
+                    "chunk_id": chunk.get("chunk_id", chunk.get("_id", "unknown_chunk_id"))
                 }
                 for chunk in all_chunks
             ]
@@ -2246,9 +2246,9 @@ async def _build_query_context(
                 source_type="mixed",
                 chunk_token_limit=available_chunk_tokens,  # Pass dynamic limit
             )
-
             # Rebuild text_units_context with truncated chunks
             for i, chunk in enumerate(truncated_chunks):
+
                 text_units_context.append(
                     {
                         "id": i + 1,
@@ -3215,6 +3215,12 @@ async def apply_rerank_if_enabled(
             logger.info(
                 f"Successfully reranked {len(retrieved_docs)} documents to {len(reranked_docs)}"
             )
+            
+            # Copy chunk_id from retrieved_docs to reranked_docs
+            for i, reranked_doc in enumerate(reranked_docs):
+                if i < len(retrieved_docs) and "chunk_id" in retrieved_docs[i]:
+                    reranked_doc["chunk_id"] = retrieved_docs[i]["chunk_id"]
+
             return reranked_docs
         else:
             logger.warning("Rerank returned empty results, using original documents")
